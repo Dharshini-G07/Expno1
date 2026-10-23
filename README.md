@@ -212,5 +212,5 @@ iv) Generate Third Image Using Bitwise Operations.
 
 
 
-Result:
+## Result:
 Thus, the images were read, displayed, brightness and contrast adjustments were made, and bitwise operations were performed successfully using the Python program.
