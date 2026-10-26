@@ -38,137 +38,137 @@ Register Number: 212224230209
 ## Ex. No. 01
 
 ```
+
 import cv2
 import matplotlib.pyplot as plt
-img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-plt.imshow(img_rgb, cmap='viridis')  # You can change 'viridis' to another cmap or use None for RGB images
-plt.title("Original Image")
-plt.axis('off')  # Removes axis ticks and labels
-plt.show()
-image = cv2.imread('Qno. 1.jpg') 
-img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-img_rgb.shape
-line_img = cv2.line(img_rgb, (0, 0), (768, 600), (255, 0, 0), 2) # cv2.line(image, start_point, end_point, color, thickness)
-plt.imshow(line_img, cmap='viridis')  
-plt.title("Image with Line")
-plt.axis('off')  
-plt.show()
+# Load image
+img = cv2.imread('Qno. 1.jpg')
 
-image = cv2.imread('Qno. 1.jpg') 
+if img is None:
+    print("Image not found. Check the file name and folder.")
+else:
+    print("Original image shape:", img.shape)
 
-img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-img_rgb.shape
-circle_img = cv2.circle(img_rgb,(400,300),150,(255,0,0),10) # cv2.circle(image, center, radius, color, thickness)
-plt.imshow(circle_img, cmap='viridis')  
-plt.title("Image with Circle")
-plt.axis('off')  
-plt.show()
+    # Convert BGR to RGB
+    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-image = cv2.imread('Qno. 1.jpg') 
+    # Display original image
+    plt.figure()
+    plt.imshow(img_rgb)
+    plt.title("Original Image")
+    plt.axis('off')
+    plt.show()
 
-img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-img.shape
+    # Draw line
+    line_img = img_rgb.copy()
+    cv2.line(line_img, (0, 0), (min(768, img.shape[1]-1), min(600, img.shape[0]-1)), (255, 0, 0), 2)
 
-rectangle_img = cv2.rectangle(img_rgb, (0, 0), (768, 600), (0, 0, 255), 10)  # cv2.rectangle(image, start_point, end_point, color, thickness)
+    plt.figure()
+    plt.imshow(line_img)
+    plt.title("Image with Line")
+    plt.axis('off')
+    plt.show()
 
-plt.imshow(rectangle_img, cmap='viridis')  
-plt.title("Image with Rectangle")
-plt.axis('off')  
-plt.show()
+    # Draw circle
+    circle_img = img_rgb.copy()
+    center = (img.shape[1]//2, img.shape[0]//2)
+    cv2.circle(circle_img, center, min(150, img.shape[1]//2, img.shape[0]//2), (255, 0, 0), 10)
 
-image = cv2.imread('Qno. 1.jpg') 
+    plt.figure()
+    plt.imshow(circle_img)
+    plt.title("Image with Circle")
+    plt.axis('off')
+    plt.show()
 
-img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
+    # Draw rectangle
+    rectangle_img = img_rgb.copy()
+    cv2.rectangle(rectangle_img, (0, 0), (img.shape[1]-1, img.shape[0]-1), (0, 0, 255), 10)
 
-text_img = cv2.putText(img_rgb, "OpenCV Drawing", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 10)  ## cv2.putText(image, text, position, font, font_scale, color, thickness)
+    plt.figure()
+    plt.imshow(rectangle_img)
+    plt.title("Image with Rectangle")
+    plt.axis('off')
+    plt.show()
 
-plt.imshow(text_img, cmap='viridis')  
-plt.title("Image with Text")
-plt.axis('off')  
-plt.show()
+    # Add text
+    text_img = img_rgb.copy()
+    cv2.putText(text_img, "OpenCV Drawing", (10, 40),
+                cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
 
-image = cv2.imread('Qno. 1.jpg') 
-image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    plt.figure()
+    plt.imshow(text_img)
+    plt.title("Image with Text")
+    plt.axis('off')
+    plt.show()
 
-plt.imshow(image_rgb)
-plt.title("Original RGB Image")
-plt.axis("off")
+    # HSV color space
+    image_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    plt.figure()
+    plt.imshow(cv2.cvtColor(image_hsv, cv2.COLOR_HSV2RGB))
+    plt.title("HSV Image")
+    plt.axis('off')
+    plt.show()
 
-image_hsv = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2HSV)
+    # Grayscale image
+    image_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    plt.figure()
+    plt.imshow(image_gray, cmap='gray')
+    plt.title("Grayscale Image")
+    plt.axis('off')
+    plt.show()
 
-plt.imshow(image_hsv)
-plt.title("HSV Image")
-plt.axis("off")
+    # YCrCb color space
+    image_ycrcb = cv2.cvtColor(img, cv2.COLOR_BGR2YCrCb)
+    plt.figure()
+    plt.imshow(cv2.cvtColor(image_ycrcb, cv2.COLOR_YCrCb2RGB))
+    plt.title("YCrCb Image")
+    plt.axis('off')
+    plt.show()
 
-image_gray = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2GRAY)
+    # Add a white block
+    white_img = img.copy()
+    h, w = white_img.shape[:2]
+    white_img[200:min(500, h), 200:min(500, w)] = [255, 255, 255]
+    plt.figure()
+    plt.imshow(cv2.cvtColor(white_img, cv2.COLOR_BGR2RGB))
+    plt.title("Image with White Block")
+    plt.axis('off')
+    plt.show()
 
-plt.imshow(image_gray, cmap='gray')
-plt.title("Grayscale Image")
-plt.axis("off")
+    # Resize image
+    resized_image = cv2.resize(img, (img.shape[1]//2, img.shape[0]//2))
+    plt.figure()
+    plt.imshow(cv2.cvtColor(resized_image, cv2.COLOR_BGR2RGB))
+    plt.title("Resized Image (Half Size)")
+    plt.axis('off')
+    plt.show()
 
-image_ycrcb = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2YCrCb)
+    # Crop region of interest
+    roi = img[50:min(350, img.shape[0]), 50:min(350, img.shape[1])]
+    if roi.size > 0:
+        plt.figure()
+        plt.imshow(cv2.cvtColor(roi, cv2.COLOR_BGR2RGB))
+        plt.title("Cropped Region of Interest (ROI)")
+        plt.axis('off')
+        plt.show()
 
-plt.imshow(image_ycrcb)
-plt.title("YCrCb Image")
-plt.axis("off")
+    # Flip horizontally
+    flipped_horizontally = cv2.flip(img, 1)
+    plt.figure()
+    plt.imshow(cv2.cvtColor(flipped_horizontally, cv2.COLOR_BGR2RGB))
+    plt.title("Flipped Horizontally")
+    plt.axis('off')
+    plt.show()
 
-image_hsv_to_rgb = cv2.cvtColor(image_hsv, cv2.COLOR_HSV2RGB)
-plt.imshow(image_hsv_to_rgb)
-plt.title("HSV to RGB Image")
-plt.axis("off")
+    # Flip vertically
+    flipped_vertically = cv2.flip(img, 0)
+    plt.figure()
+    plt.imshow(cv2.cvtColor(flipped_vertically, cv2.COLOR_BGR2RGB))
+    plt.title("Flipped Vertically")
+    plt.axis('off')
+    plt.show()
 
-image[200:500, 200:500] = [255, 255, 255]  # Rows: 200-499, Columns: 200-499
-
-image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
-plt.imshow(image_rgb)
-plt.title("Image with 300x300 White Block")
-plt.axis("off")
-plt.show()
-
-image = cv2.imread('Qno. 1.jpg') 
-image.shape
-
-resized_image = cv2.resize(image, (768 // 2, 600 // 2))  # (new_width, new_height)
-
-resized_image_rgb = cv2.cvtColor(resized_image, cv2.COLOR_BGR2RGB)
-resized_image_rgb.shape
-
-plt.imshow(resized_image_rgb)
-plt.title("Resized Image (Half Size)")
-plt.axis("off")
-plt.show()
-
-image = cv2.imread('Qno. 1.jpg') 
-image.shape
-
-roi = image[50:350, 50:350]  # Rows: 50-349, Columns: 50-349
-
-roi_rgb = cv2.cvtColor(roi, cv2.COLOR_BGR2RGB)
-
-plt.imshow(roi_rgb)
-plt.title("Cropped Region of Interest (ROI)")
-plt.axis("off")
-plt.show()
-
-image = cv2.imread('Qno. 1.jpg') 
-
-flipped_horizontally = cv2.flip(image, 1)
-
-flipped_horizontally_rgb = cv2.cvtColor(flipped_horizontally, cv2.COLOR_BGR2RGB)
-
-plt.imshow(flipped_horizontally_rgb)
-plt.title("Flipped Horizontally")
-plt.axis("off")
-
-flipped_vertically = cv2.flip(image, 0)
-
-flipped_vertically_rgb = cv2.cvtColor(flipped_vertically, cv2.COLOR_BGR2RGB)
-
-plt.imshow(flipped_vertically_rgb)
-plt.title("Flipped Vertically")
-plt.axis("off")
 ```
 
 
